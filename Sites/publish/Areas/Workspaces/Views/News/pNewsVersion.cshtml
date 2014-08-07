@@ -1,0 +1,48 @@
+﻿@model IEnumerable<FIFTHMVC.Models.NewsVersion>
+@using PagedList.Mvc;
+@{
+    Layout = "";
+}
+
+<div style="margin-top: 10px;">
+    <div id="@(ViewBag.Target)_Loader" class="ajax-loader"></div>
+
+    <table class="table">
+        <tr style="line-height:46px;vertical-align:middle;height:36px;color: #511f7e; font-weight 400; background-color #ffffff; background: url('@Url.Content("~/Content/assets/thtail.png")');">
+            <th>ลำดับ</th>
+            <th>
+                วันที่
+            </th>
+            <th>
+                ผู้แก้ไข
+            </th>
+
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Revision</td>
+                <td>
+                    @item.NT01_UpdDate
+                </td>
+                <td>
+                    @item.UpdateUser
+                </td>
+
+            </tr>
+        }
+
+    </table>
+
+</div>
+
+
+
+<script>
+
+    $("tr:even").css("background-color", "#f2e9fc");
+    $("tr:odd").css("background-color", "#fdfdfb");
+
+</script>
+

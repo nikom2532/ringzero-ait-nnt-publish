@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="1ccff888ff6e48fbbbb1b81660e8c31a" Name="Diagram1">
+        <EntityTypeShape EntityType="ModelPRDDB.CM05_Region" Width="1.5" PointX="0.75" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModelPRDDB.CM06_Province" Width="1.5" PointX="3" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModelPRDDB.CM07_Ampur" Width="1.5" PointX="5.25" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModelPRDDB.CM08_Tumbon" Width="1.5" PointX="7.5" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModelPRDDB.NT01_News" Width="1.5" PointX="0.75" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModelPRDDB.NT01_NewsVersion" Width="1.5" PointX="5.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModelPRDDB.NT01_ViewNews" Width="1.5" PointX="3" PointY="17.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModelPRDDB.NT02_NewsType" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModelPRDDB.NT03_NewsSubType" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModelPRDDB.NT05_Policy" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModelPRDDB.NT08_PublicType" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModelPRDDB.NT10_VDO" Width="1.5" PointX="2.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModelPRDDB.NT11_Picture" Width="1.5" PointX="11.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModelPRDDB.NT12_Voice" Width="1.5" PointX="11.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModelPRDDB.NT13_OtherFile" Width="1.5" PointX="11.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModelPRDDB.SC03_User" Width="1.5" PointX="9.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModelPRDDB.SC07_Department" Width="1.5" PointX="13.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModelPRDDB.VW_NNT01_PublishNews" Width="1.5" PointX="13.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModelPRDDB.VW_NNT02_RawNews" Width="1.5" PointX="13.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModelPRDDB.VW_NNT03_Video" Width="1.5" PointX="7.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModelPRDDB.VW_NNT04_Picture" Width="1.5" PointX="15.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModelPRDDB.VW_NNT05_Voice" Width="1.5" PointX="15.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModelPRDDB.VW_NNT06_OtherFile" Width="1.5" PointX="15.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModelPRDDB.VW_NNT08_NewsCategory" Width="1.5" PointX="15.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModelPRDDB.VW_NNT09_NewsCategorySub" Width="1.5" PointX="9.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ModelPRDDB.VW_NNT10_User" Width="1.5" PointX="15.75" PointY="12.75" IsExpanded="true" />
+        <AssociationConnector Association="ModelPRDDB.FK_CM06_PRO_REFERENCE_CM05_REG" ManuallyRouted="false" />
+        <AssociationConnector Association="ModelPRDDB.FK_SC03_USE_REFERENCE_CM05_REG" ManuallyRouted="false" />
+        <AssociationConnector Association="ModelPRDDB.FK_CM07_AMP_REFERENCE_CM06_PRO" ManuallyRouted="false" />
+        <AssociationConnector Association="ModelPRDDB.FK_SC03_USE_REFERENCE_CM06_PRO" ManuallyRouted="false" />
+        <AssociationConnector Association="ModelPRDDB.FK_CM08_TUM_REFERENCE_CM07_AMP" ManuallyRouted="false" />
+        <AssociationConnector Association="ModelPRDDB.FK_SC03_USE_REFERENCE_CM07_AMP" ManuallyRouted="false" />
+        <AssociationConnector Association="ModelPRDDB.FK_SC03_USE_REFERENCE_CM08_TUM" ManuallyRouted="false" />
+        <AssociationConnector Association="ModelPRDDB.FK_NT01_ViewNews_NT01_News" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

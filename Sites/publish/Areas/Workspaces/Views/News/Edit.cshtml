@@ -1,0 +1,549 @@
+﻿@model FIFTHMVC.Models.NT01_News
+@using Kendo.Mvc.UI
+@{
+    ViewBag.Title = "ข่าว " + Model.NT01_NewsID;
+}
+
+<style>
+    .required:after {
+        content: " *";
+        color: red;
+    }
+</style>
+
+@using (Html.BeginForm("edit", "datafield", new { area = "workspaces" }, FormMethod.Post, new { id = "frm_edit" }))
+{
+    <div style="display:inline-block;margin-top:10px;width:100%;">
+        <div id="divleft" style="width:280px;float:left;display:inline-block;">
+            <div>
+                <p class="h1title expandable">รายละเอียดการค้นหา</p>
+                <div>
+                    <div class="form-horizontal" style="margin-left: auto; margin-right: auto;">
+                        <div class="form-group">
+                            <div class="row row-xs">
+                                <div class="col-xs-4 nolrpadding" style="text-align: right;">
+                                    <label class="control-label">รหัสข่าว</label>
+                                </div>
+                                <div class="col-xs-8">
+                                    @Html.TextBoxFor(model => model.NT01_NewsID, new { @class = "form-control input-sm required", @readonly = true })
+                                </div>
+                            </div>
+
+                            <div class="row row-xs">
+                                <div class="col-xs-4 nolrpadding" style="text-align: right;">
+                                    <label class="control-label required">ประเภทข่าว</label>
+                                </div>
+                                <div class="col-xs-8">
+                                    <span class="select-menu">
+                                        <span>เลือกประเภทข่าว</span>
+                                        @Html.DropDownListFor(m => m.NT02_TypeID, ViewData["modelNewsType"] as SelectList, "เลือกประเภทข่าว", new { @class = "form-control" })
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="row row-xs">
+                                <div class="col-xs-4 nolrpadding" style="text-align: right;">
+                                    <label class="control-label" style="">ประเภทข่าวย่อย</label>
+                                </div>
+                                <div class="col-xs-8">
+                                    <span class="select-menu">
+                                        <span>เลือกประเภทข่าวย่อย</span>
+                                        @Html.DropDownListFor(m => m.NT03_SubTypeID, ViewData["modelNewsSubType"] as SelectList, "เลือกประเภทข่าวย่อย", new { @class = "form-control" })
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="row row-xs">
+                                <div class="col-xs-4 nolrpadding" style="text-align: right;">
+                                    <label class="control-label" style="">ประเภทข่าวเพิ่มเติม</label>
+                                </div>
+                                <div class="col-xs-8">
+                                    <span class="select-menu">
+                                        <span>เลือกประเภทข่าวเพิ่มเติม</span>
+                                        @Html.DropDownListFor(m => m.NT03_SubTypeID, ViewData["modelNewsSubType"] as SelectList, "เลือกประเภทข่าวเพิ่มเติม", new { @class = "form-control" })
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="row row-xs">
+                                <div class="col-xs-4 nolrpadding" style="text-align: right;">
+                                    <label class="control-label">นโยบาย</label>
+                                </div>
+                                <div class="col-xs-8">
+                                    <span class="select-menu">
+                                        <span>เลือกนโยบาย</span>
+                                        @Html.DropDownListFor(m => m.NT05_PolicyID, ViewData["modelNewsPolicy"] as SelectList, "เลือกนโยบาย", new { @class = "form-control" })
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="row row-xs">
+                                <div class="col-xs-4 nolrpadding" style="text-align: right;">
+                                    <label class="control-label">ประเด็นข่าว</label>
+                                </div>
+                                <div class="col-xs-8">
+                                    <span class="select-menu">
+                                        <span>เลือกประเด็นข่าว</span>
+                                        @Html.DropDownList("CategoryID", ViewData["modelNewsType"] as SelectList, "เลือกประเด็นข่าว", new { @class = "form-control" })
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="row row-xs">
+                                <div class="col-xs-4 nolrpadding" style="text-align: right;">
+                                    <label class="control-label">วันที่ข่าว</label>
+                                </div>
+                                <div class="col-xs-8">
+                                    @Html.TextBoxFor(m => m.NT01_NewsDate, new { @class = "form-control input-sm datepicker" })
+                                </div>
+                            </div>
+
+                            <div class="row row-xs">
+                                <div class="col-xs-4 nolrpadding" style="text-align: right;">
+                                    <label class="control-label">ภาคเวลา</label>
+                                </div>
+                                <div class="col-xs-8">
+                                    <span class="select-menu">
+                                        <span>เลือกภาคเวลา</span>
+                                        @Html.DropDownList("Time", ViewData["modelNewsType"] as SelectList, "เลือกภาคเวลา", new { @class = "form-control" })
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <p class="h1title expandable">เพิ่มเติม</p>
+                <div>
+                    <div class="form-horizontal" style="margin-left: auto; margin-right: auto;">
+                        <div class="form-group">
+                            <div class="row row-xs">
+                                <div class="col-xs-4 nolrpadding" style="text-align: right;">
+                                    <label class="control-label">ที่มา</label>
+                                </div>
+                                <div class="col-xs-8">
+                                    @Html.TextBoxFor(model => model.NT01_NewsSource, new { @class = "form-control input-sm" })
+                                </div>
+                            </div>
+
+                            <div class="row row-xs">
+                                <div class="col-xs-4 nolrpadding" style="text-align: right;">
+                                    <label class="control-label">ผู้สื่อข่าว</label>
+                                </div>
+                                <div class="col-xs-8">
+                                    <div style="line-height:32px;">
+                                        @Html.HiddenFor(m => m.NT01_ReporterID)
+
+                                        @{Html.RenderAction("getfullname", new { id = Model.NT01_ReporterID });}
+                                        @if (Model.NT01_ReporterID != null)
+                                        {
+                                            <div style="float:right;">
+                                                <img style="width:16px;" src="~/Content/assets/sh.png" />
+                                                <img style="width:16px;" src="~/Content/assets/delete.png" />
+                                            </div>
+
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row row-xs">
+                                <div class="col-xs-4 nolrpadding" style="text-align: right;">
+                                    <label class="control-label">ผู้ส่งข่าว</label>
+                                </div>
+                                <div class="col-xs-8">
+                                    <div style="line-height:32px;">
+                                        @Html.HiddenFor(m => m.NT01_EditorID)
+                                        @{Html.RenderAction("getfullname", new { id = Model.NT01_EditorID });}
+                                        @if (Model.NT01_EditorID != null)
+                                        {
+                                            <div style="float:right;">
+                                                <img style="width:16px;" src="~/Content/assets/sh.png" />
+                                                <img style="width:16px;" src="~/Content/assets/delete.png" />
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row row-xs">
+                                <div class="col-xs-4 nolrpadding" style="text-align: right;">
+                                    <label class="control-label">ช่างภาพ</label>
+                                </div>
+                                <div class="col-xs-8">
+                                    <div style="line-height:32px;">
+                                        @Html.HiddenFor(m => m.NT01_CamCoderID)
+                                        @{Html.RenderAction("getfullname", new { id = Model.NT01_CamCoderID });}
+                                        @if (Model.NT01_CamCoderID != null)
+                                        {
+                                            <div style="float:right;">
+                                                <img style="width:16px;" src="~/Content/assets/sh.png" />
+                                                <img style="width:16px;" src="~/Content/assets/delete.png" />
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row row-xs">
+                                <div class="col-xs-4 nolrpadding" style="text-align: right;">
+                                    <label class="control-label">Tag</label>
+                                </div>
+                                <div class="col-xs-8">
+                                    @Html.TextBoxFor(model => model.NT01_NewsTag, new { @class = "form-control input-sm" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+        <div id="divright" style="margin-left:300px;padding-left:10px;border-left:1px solid #e5e5e5;">
+            <div style="">
+                <p class="h1title expandable" style="margin-left:0px;">เนื้อหาข่าว</p>
+                <div style="margin-bottom:-40px;">
+                    <div class="form-horizontal" style="margin-left:10px; margin-right: auto;">
+                        <div class="form-group" style="height:460px;">
+                            <div class="row row-xs">
+                                <div class="col-xs-3" style="text-align:left;">
+                                    <label class="control-label">หัวข้อข่าว</label>
+                                </div>
+                            </div>
+                            <div class="row row-xs">
+                                <div class="col-xs-12">
+                                    @Html.TextBoxFor(model => model.NT01_NewsTitle, new { @class = "form-control input-sm", style = "max-width:660px;" })
+                                </div>
+                            </div>
+
+                            <div class="row row-xs">
+                                <div class="col-xs-3" style="text-align:left;">
+                                    <label class="control-label">เนื้อหาข่าว</label>
+                                </div>
+                            </div>
+
+                            <div class="row row-xs">
+                                <div class="col-xs-12">
+                                    <div style="background-color:#ffffff;border:1px solid #ccc;color:#333333;overflow-y:scroll;height:300px;padding:10px 6px 20px 6px;margin-right:12px;">
+                                        @if (Model.NT01_NewsDesc != null)
+                                        {
+                                            @Html.Raw(Model.NT01_NewsDesc)
+                                        }
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="">
+                <p class="h1title expandable" style="margin-left:0px;">ข้อมูลไฟล์แนบ</p>
+                <div style="margin-bottom:0px;">
+                    <div class="form-group">
+                        <div class="row row-xs">
+                            <div class="col-xs-12">
+                                <div id="divfilepreview" style="text-align:center; background-color:#ffffff;border:1px solid #ccc; margin-bottom:10px;min-height:180px;">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row row-xs">
+                            <div class="col-xs-12">
+                                <div id="divfilelist">
+                                    <ul class="nav nav-tabs" style="height:40px;">
+                                        <li class="active"><a href="#filevideo" data-toggle="tab">วีดีโอ</a></li>
+                                        <li><a href="#filepicture" data-toggle="tab">รูปภาพ</a></li>
+                                        <li><a href="#filevoice" data-toggle="tab">เสียง</a></li>
+                                        <li><a href="#fileothers" data-toggle="tab">อื่นๆ</a></li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade in active" id="filevideo"><div id="filevideo_Loader" style="height:100px;" class="ajax-loader"></div></div>
+                                        <div class="tab-pane fade" id="filepicture"><div id="filevideo_Loader" style="height:100px;" class="ajax-loader"></div></div>
+                                        <div class="tab-pane fade" id="filevoice"><div id="filevideo_Loader" style="height:100px;" class="ajax-loader"></div></div>
+                                        <div class="tab-pane fade" id="fileothers"><div id="filevideo_Loader" style="height:100px;" class="ajax-loader"></div></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="">
+                <p class="h1title expandable" style="margin-left:0px;">ประวัติการแก้ไขเนื้อข่าว</p>
+                <div style="margin-bottom:-40px;">
+                    <div class="form-group" style="height:100px;">
+                        <div class="row row-xs">
+                            <div class="col-xs-12">
+                                <div id="divnewsversion">
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <hr style="border-color:#ccc;border-style:dotted;width:90%;" />
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-12" style="text-align:center;">
+                <button class="bt btn" type="button" id="btn_save" style="min-width:100px;">&nbsp;&nbsp;&nbsp;แก้ไขข่าว&nbsp;&nbsp;&nbsp;</button>
+                <button class="btn_publish_news bt btn" type="button" id="btn_publish_news" style="min-width:100px;">
+                    &nbsp;&nbsp;&nbsp;เผยแพร่ข่าว&nbsp;&nbsp;&nbsp;
+                </button>
+                @Html.ActionLink("ยกเลิก", "index", new { controller = "search", area = "workspaces" }, new { style = "min-width:100px;", @class = "bt btn" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-12" style="text-align:center;">
+                <span style="color:#ff0000;display:inline-block;">* ข้อมูลที่จำเป็นต้องกรอก</span>
+            </div>
+
+        </div>
+
+    </div>
+
+}
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModalPublish" tabindex="-1" role="dialog" aria-labelledby="myModalPublishLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">ปิด</span></button>
+                <h4 class="modal-title" id="myModalPublishLabel">เผยแพร่ข่าว</h4>
+            </div>
+            <div class="modal-body">
+                loading...
+            </div>
+            <div class="modal-footer" style="text-align:center;">
+                <button type="button" class="bt btn bt-primary" data-dismiss="modal">ใส่ตะกร้า</button>
+                <button type="button" class="bt btn btnmodelpublish">เผยแพร่ข่าว</button>
+
+
+
+            </div><div class="form-group">
+                <div class="col-md-12" style="text-align:center;">
+                    <span style="color:#ff0000;display:inline-block;">* ข้อมูลที่จำเป็นต้องกรอก</span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    $('#myTab a').click(function (e) {
+        e.preventDefault()
+        $(this).tab('show')
+    })
+
+
+    $(function () {
+        $(".select-menu > select > option:eq(0)").attr("selected", "selected");
+        $(".select-menu > select").on("change", function () {
+            var selectmenu_txt = $(this).find("option:selected").text();
+            $(this).prev("span").text(selectmenu_txt);
+        });
+    });
+
+
+
+    $('#btn_publish_news').click(function (e) {
+
+        $.ajax({
+            type: 'GET',
+            url: '@Url.Action("publish", "news")',
+            data: { id: '@Model.NT01_NewsID' },
+            success: function (result) {
+                $("#myModalPublish .modal-body").html(result);
+                $('#myModalPublish').modal('show');
+            },
+            OnFailure: function (data) {
+                alert("Error, please contact system administrator.");
+            }, cache: false
+        });
+    })
+
+
+
+    $('.btnmodelpublish').click(function (e) {
+
+        var form = $('#myModalPublish form');
+
+        //alert(form.attr('action'));
+
+        form.submit();
+
+        //if ($('#' + form + ' #DataFieldId').val() != '' && $('#' + form + ' #Keyword').val() != '') {
+
+        //    var url = $('#' + form).attr('action');
+
+        @*$.ajax({
+                type: 'POST',
+                url: url,
+                data: $('#' + form).serialize(),
+                success: function (result) {
+
+                    $('#myModalAddMetadata').modal('hide');
+                    $(this).modal('hide');
+                    $('body').removeClass('modal-open');
+                    $('.modal-backdrop').remove();
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("pNewsMetadata", "news")',
+                        data: { id: '@ViewBag.NewsID' },
+                        success: function (result) {
+                            $("#divmetadata").html(result);
+
+
+                        },
+                        OnFailure: function (data) {
+                            alert("Error, please contact system administrator.");
+                        }, cache: false
+                    });
+
+
+                },
+                OnFailure: function (data) {
+                    alert("Error, please contact system administrator.");
+                }, cache: false
+            });*@
+
+        //} else {
+        //    alert("กรุณาตรวจสอบข้อมูลให้ครบ.");
+        //}
+
+    });
+
+
+    $(".expandable").click(function () {
+
+        $header = $(this);
+        $content = $header.next();
+        $content.slideToggle(500, function () {
+        });
+
+    });
+
+
+
+    $(function () {
+        $("#NT01_NewsDate").datepicker({
+            dateFormat: 'dd-mm-yy',
+            numberOfMonths: 1,
+            changeYear: true,
+            onSelect: function (selected) {
+                //$("#NewsDateTo").datepicker("option", "minDate", selected)
+            }
+        });
+    });
+
+
+    $.ajax({
+        type: 'POST',
+        url: '@Url.Action("pNewsFileVideo", "news")',
+        data: { id: '@Model.NT01_NewsID' },
+        success: function (result) {
+            $("#filevideo").html(result);
+        },
+        OnFailure: function (data) {
+            alert("Error, please contact system administrator.");
+        }, cache: false
+    });
+
+
+    $.ajax({
+        type: 'POST',
+        url: '@Url.Action("pNewsFilePicture", "news")',
+        data: { id: '@Model.NT01_NewsID' },
+        success: function (result) {
+            $("#filepicture").html(result);
+        },
+        OnFailure: function (data) {
+            alert("Error, please contact system administrator.");
+        }, cache: false
+    });
+
+
+    $.ajax({
+        type: 'POST',
+        url: '@Url.Action("pNewsFileVoice", "news")',
+        data: { id: '@Model.NT01_NewsID' },
+        success: function (result) {
+            $("#filevoice").html(result);
+        },
+        OnFailure: function (data) {
+            alert("Error, please contact system administrator.");
+        }, cache: false
+    });
+
+    $.ajax({
+        type: 'POST',
+        url: '@Url.Action("pNewsFileOthers", "news")',
+        data: { id: '@Model.NT01_NewsID' },
+        success: function (result) {
+            $("#fileothers").html(result);
+        },
+        OnFailure: function (data) {
+            alert("Error, please contact system administrator.");
+        }, cache: false
+    });
+
+    $.ajax({
+        type: 'POST',
+        url: '@Url.Action("pNewsVersion", "news")',
+        data: { id: '@Model.NT01_NewsID' },
+        success: function (result) {
+            $("#divnewsversion").html(result);
+        },
+        OnFailure: function (data) {
+            alert("Error, please contact system administrator.");
+        }, cache: false
+    });
+
+
+    $(document).ready(function () {
+        $("#menu_newssearch").addClass("active");
+
+
+
+        //$("form *").change(function () {
+        //    formmodified = 1;
+        //});
+
+        //formmodified = 0;
+
+        //$(window).on('beforeunload', function () {
+        //    if (formmodified == 1) {
+        //        var msg = confirmExit();
+        //        return msg;
+        //    }
+
+        //});
+        //function confirmExit() {
+        //    jQuery.ajax({
+        //    });
+        //    return "ข้อมุลที่ทำการเปลี่ยนแปลง จะไม่ถูกทำการบันทึก, ท่านมั่นใจที่จะออกจากหน้านี้หรือไม?";
+        //}
+    });
+
+</script>
+

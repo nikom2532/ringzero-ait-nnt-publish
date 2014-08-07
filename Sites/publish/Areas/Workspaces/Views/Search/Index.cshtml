@@ -1,0 +1,391 @@
+﻿@model FIFTHMVC.Models.SearchModel
+@{
+    ViewBag.Title = "ค้นหาข่าว";
+}
+
+<style>
+    label {
+        font-weight: normal !important;
+    }
+
+    form-control {
+        font-size: 0.9em;
+    }
+
+    .row {
+        margin-bottom: 4px;
+        color: #868684;
+    }
+
+    #searchresult li {
+        min-width: 200px;
+        text-align: center;
+        font-weight: 600;
+    }
+
+        #searchresult li a {
+           
+        }
+
+            #searchresult .active a  {
+
+            }
+
+
+    /*#searchresulttab li a {
+        color: #501d7a;
+        font-weight: 600;
+    }*/
+</style>
+
+<div>
+    <p class="h1title expandable">รายละเอียดการค้นหา</p>
+    <section style="max-width: 1024px;">
+
+        @using (Html.BeginForm("search", "search", null, FormMethod.Post, new { id = "searchform", @class = "form-horizontal", role = "form" }))
+        {
+            <div class="form-horizontal" style="max-width: 800px; margin-left: auto; margin-right: auto;">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-xs-2 col-xs-offset-4" style="text-align: right;">
+                            <label class="control-label">คำค้นหา</label>
+                        </div>
+                        <div class="col-xs-4">
+                            @Html.TextBoxFor(model => model.Keyword, new { @class = "form-control input-sm" })
+                        </div>
+                        <div class="col-xs-2" style="text-align: right;">
+                            <label class="control-label">นโยบาย</label>
+                        </div>
+                        <div class="col-xs-4">
+                            <span class="select-menu">
+                                <span>เลือก นโยบาย</span>
+                                @Html.DropDownListFor(m => m.Policy, ViewData["modelNewsPolicy"] as SelectList, "เลือก นโยบาย", new { @class = "form-control" })
+                            </span>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-xs-2 col-xs-offset-4" style="text-align: right;">
+                            <label class="control-label">ผู้สื่อข่าว</label>
+                        </div>
+                        <div class="col-xs-4">
+                            <span class="select-menu">
+                                <span>เลือก ผู้สื่อข่าว</span>
+                                @Html.DropDownListFor(m => m.Reporter, ViewData["modelReporter"] as SelectList, "เลือก ผู้สื่อข่าว", new { @class = "form-control" })
+                            </span>
+
+                        </div>
+                        <div class="col-xs-2" style="text-align: right;">
+                            <label class="control-label">ประเภทข่าว</label>
+                        </div>
+                        <div class="col-xs-4">
+                            <span class="select-menu">
+                                <span>เลือก ประเภทข่าว</span>
+                                @Html.DropDownListFor(m => m.NewsType, ViewData["modelNewsType"] as SelectList, "เลือก ประเภทข่าว", new { @class = "form-control" })
+                            </span>
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-2 col-xs-offset-4" style="text-align: right;">
+                            <label class="control-label">ผู้เรียบเรียง</label>
+                        </div>
+                        <div class="col-xs-4">
+                            <span class="select-menu">
+                                <span>เลือก ผู้เรียบเรียง</span>
+                                @Html.DropDownListFor(m => m.Rewriter, ViewData["modelRewriter"] as SelectList, "เลือก ผู้เรียบเรียง", new { @class = "form-control" })
+                            </span>
+
+                        </div>
+                        @*ViewData["modelRewriter"] as SelectList*@
+                        <div class="col-xs-2" style="text-align: right;">
+                            <label class="control-label">ประเภทข่าวย่อย</label>
+                        </div>
+                        <div class="col-xs-4">
+
+                            <span class="select-menu">
+                                <span>เลือก ประเภทข่าวย่อย</span>
+                                @Html.DropDownListFor(m => m.NewsSubType, ViewData["modelNewsSubType"] as SelectList, "เลือก ประเภทข่าวย่อย", new { @class = "form-control" })
+                            </span>
+
+
+                            @*<span style="max-width:280px;overflow:hidden;">
+
+                                </span>*@
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-2 col-xs-offset-4" style="text-align: right;">
+                            <label class="control-label">บรรณาธิการ</label>
+                        </div>
+                        <div class="col-xs-4">
+                            <span class="select-menu">
+                                <span>เลือก บรรณาธิการ</span>
+                                @Html.DropDownListFor(m => m.Editor, ViewData["modelEditor"] as SelectList, "เลือก บรรณาธิการ", new { @class = "form-control" })
+                            </span>
+
+                        </div>
+
+                        @*ViewData["modelEditor"] as SelectList*@
+                        <div class="col-xs-2" style="text-align: right;">
+                            <label class="control-label">หน่วยงาน</label>
+                        </div>
+                        <div class="col-xs-4">
+                            <span class="select-menu">
+                                <span>เลือก หน่วยงาน</span>
+                                @Html.DropDownListFor(m => m.Department, ViewData["modelDepartment"] as SelectList, "เลือก หน่วยงาน", new { @class = "form-control" })
+                            </span>
+
+                        </div>
+                        @*Enumerable.Empty<SelectListItem>()*@
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-2 col-xs-offset-4" style="text-align: right;">
+                            <label class="control-label">วันที่เริ่มต้น</label>
+                        </div>
+                        <div class="input-group col-xs-4">
+                            @Html.TextBoxFor(model => model.NewsDateFrom, new { @class = "form-control input-sm datepicker" })
+                        </div>
+                        <div class="col-xs-2" style="text-align: right;">
+                            <label class="control-label">วันที่สิ้นสุด</label>
+                        </div>
+                        <div class="input-group col-xs-4">
+                            @Html.TextBoxFor(model => model.NewsDateTo, new { @class = "form-control input-sm datepicker" })
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-2 col-xs-offset-4" style="text-align: right;">
+                            <label class="control-label">ทีมาข่าว</label>
+                        </div>
+                        <div class="col-xs-4">
+                            @*@Html.TextBoxFor(model => model.Source, new { @class = "form-control input-sm" })*@
+                            <label>@Html.RadioButton("Source", new { Value = "all" }, true, new { @class = "" })ทั้งหมด</label>
+                            <label>@Html.RadioButton("Source", new { Value = "center" }, false, new { @class = "" })สวท.</label>
+                            <label>@Html.RadioButton("Source", new { Value = "upcountry" }, false, new { @class = "" })ภูมิภาค</label>
+                        </div>
+                        <div class="col-xs-2" style="text-align: right;">
+                            <label class="control-label">สถานะข่าว</label>
+                        </div>
+                        <div class="col-xs-4">
+
+                            <label>@Html.RadioButton("status", new { Value = "all" }, true, new { @class = "" })ทั้งหมด</label>
+                            <label>@Html.RadioButton("status", new { Value = "approved" }, false, new { @class = "" })ตรวจ</label>
+                            <label>@Html.RadioButton("status", new { Value = "notapprove" }, false, new { @class = "" })ไม่ตรวจ</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-2 col-xs-offset-4" style="text-align: right;">
+                            <label class="control-label">ไฟล์ประกอบข่าว</label>
+                        </div>
+                        <div class="col-xs-4">
+                            @Html.CheckBox("isCheckVideo")
+                            <label for="isCheckVideo">วีดีโอ</label>
+                            @Html.CheckBox("isCheckPicture")
+                            <label for="isCheckPicture">ภาพ</label>
+                            @Html.CheckBox("isCheckVoice")
+                            <label for="isCheckVoice">เสียง</label>
+                            @Html.CheckBox("isCheckOther")
+                            <label for="isCheckOther">อื่นๆ</label>
+                        </div>
+                        <div class="col-xs-2" style="text-align: right;">
+                            <label class="control-label">ภาษา</label>
+                        </div>
+                        <div class="col-xs-4">
+                            @Html.CheckBox("chkLANGTH")
+                            <label for="chkLANGTH">ภาษาไทย</label>
+                            @Html.CheckBox("chkLANGEN")
+                            <label for="chkLANGEN">ภาษาอังกฤษ</label>
+
+                        </div>
+                    </div>
+
+                    <div class="row" style="text-align:center; margin-top: 10px;">
+                        <input type="button" id="buttonsubmit" value="ค้นหา" class="bt" style="margin-left:auto; margin-right:auto; width: 100px;" />
+                    </div>
+
+                </div>
+            </div>
+        }
+
+    </section>
+    <div style="width:90%;margin-left:auto;margin-right:auto; border-top:1px dotted #333333;"></div>
+</div>
+
+
+
+
+<div id="searchresult" class="hidden">
+
+
+    <p class="h1title">ผลการค้นหา</p>
+    <ul id="searchresulttab" class=" nav nav-tabs">
+        <li class="active"><a href="#newsraw" data-toggle="tab">ข่าวดิบ</a></li>
+        <li><a href="#newsnbt" data-toggle="tab">NBT</a></li>
+        <li><a href="#newsbucket" data-toggle="tab">ตะกร้าข่าว</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane fade in active" id="newsraw">
+            <div id="newsrawLoader" class="ajax-loader"></div>
+        </div>
+        <div class="tab-pane fade" id="newsnbt">
+            <div id="newsnbtLoader" class="ajax-loader"></div>
+        </div>
+        <div class="tab-pane fade" id="newsbucket">
+            <div id="newsbucketLoader" class="ajax-loader"></div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    $('#NewsType').change(function () {
+        var selectedNewsType = $(this).val();
+        if (selectedNewsType != null && selectedNewsType != '') {
+            $.getJSON('@Url.Action("NewsSubType")', { NewsType: selectedNewsType }, function (NewsSubTypes) {
+                var selectedNewsSubType = $('#NewsSubType');
+                selectedNewsSubType.empty();
+                selectedNewsSubType.prev("span").text('เลือก ประเภทข่าวย่อย');
+
+                selectedNewsSubType.append($('<option/>', {
+                    value: 0,
+                    text: "เลือก ประเภทข่าวย่อย"
+                }));
+
+                $.each(NewsSubTypes, function (index, NewsSubType) {
+                    selectedNewsSubType.append($('<option/>', {
+                        value: NewsSubType.Value,
+                        text: NewsSubType.Text
+                    }));
+                });
+            });
+        }
+    });
+
+
+    $(function () {
+        $(".select-menu > select > option:eq(0)").attr("selected", "selected");
+        $(".select-menu > select").on("change", function () {
+            var selectmenu_txt = $(this).find("option:selected").text();
+            $(this).prev("span").text(selectmenu_txt);
+        });
+    });
+
+    $(".expandable").click(function () {
+
+        $header = $(this);
+        $content = $header.next();
+        $content.slideToggle(500, function () {
+        });
+
+    });
+
+    $('#searchresulttab a').click(function (e) {
+        e.preventDefault();
+        $(this).tab('show');
+    })
+
+
+    $(function () {
+        $("#NewsDateFrom").datepicker({
+            dateFormat: 'dd-mm-yy',
+            numberOfMonths: 1,
+            changeYear: true,
+            onSelect: function (selected) {
+                $("#NewsDateTo").datepicker("option", "minDate", selected)
+            }
+        });
+    });
+
+    $(function () {
+        $("#NewsDateTo").datepicker({
+            dateFormat: 'dd-mm-yy',
+            numberOfMonths: 1,
+            changeYear: true,
+            onSelect: function (selected) {
+                $("#NewsDateFrom").datepicker("option", "maxDate", selected)
+            }
+        });
+    });
+
+
+    function tabStripSearchResult_onContentLoad(e) {
+        var gap = 40;
+        var inner = 300;
+    }
+
+
+    $(document).ready(function () {
+
+
+        $("#buttonsubmit").click(function (e) {
+
+            $('#Loader').css({
+                height: $('#Loader').parent().height(),
+                width: $('#Loader').parent().width()
+            });
+
+
+            loading = '<span>Loading...</span>';
+
+            $("#newsraw").html(loading);
+            $("#newsnbt").html(loading);
+            $("#newsbucket").html(loading);
+
+            $('#searchresult').removeClass('hidden');
+
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("pNewsRaw", "search")',
+                data: $('#searchform').serialize(),
+                success: function (result) {
+                    $("#newsraw").html(result);
+                },
+                OnFailure: function (data) {
+                    alert("Error, please contact system administrator.");
+                }, cache: false
+            });
+
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("pNewsNBT", "search")',
+                data: $('#searchform').serialize(),
+                success: function (result) {
+                    $("#newsnbt").html(result);
+                },
+                OnFailure: function (data) {
+                    alert("Error, please contact system administrator.");
+                }, cache: false
+            });
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("pNewsBucket", "search")',
+                data: $('#searchform').serialize(),
+                success: function (result) {
+                    $("#newsbucket").html(result);
+                },
+                OnFailure: function (data) {
+                    alert("Error, please contact system administrator.");
+                }, cache: false
+            });
+
+
+
+        });
+
+        $("#menu_newssearch").addClass("active");
+    });
+
+
+</script>

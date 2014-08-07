@@ -1,0 +1,27 @@
+﻿@*@model IEnumerable<FIFTHMVC.Models.VW_NNT01_PublishNews>*@
+@{
+    ViewBag.Title = "ค้นหาข่าว";
+}
+
+<h4>ผลการค้นหา</h4>
+<!-- Nav tabs -->
+<ul class="nav nav-tabs">
+    <li class="active"><a href="#newsraw" data-toggle="tab">ข่าวดิบ</a></li>
+    <li><a href="#newsnbt" data-toggle="tab">NBT</a></li>
+    <li><a href="#newsbucket" data-toggle="tab">ตะกร้าข่าว</a></li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade in active" id="newsraw">
+        @Html.Partial("pNewsRaw", ViewBag.resultModel as FIFTHMVC.Models.SearchModel)
+    </div>
+    <div class="tab-pane fade" id="newsnbt"></div>
+    <div class="tab-pane fade" id="newsbucket"></div>
+</div>
+
+<script>
+    $('#myTab a').click(function (e) {
+        e.preventDefault()
+        $(this).tab('show')
+    })
+</script>

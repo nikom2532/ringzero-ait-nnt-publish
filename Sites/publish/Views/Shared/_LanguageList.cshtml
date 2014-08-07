@@ -1,0 +1,19 @@
+﻿@using System.Globalization;
+@using System.Threading;
+
+<li>
+    <a class="dropdown-toggle" href="#" data-toggle="dropdown"><img src="@Url.Content("~/Content/assets/flag_" + CultureInfo.CurrentUICulture.Name.Substring(0,2) + ".png")" style="margin-right: 10px;" /></a>
+    <ul class="dropdown-menu">
+        <li>
+            <a href="@Url.Action("changeculture", "home", new { lang = "en", returnUrl = this.Request.RawUrl, area = "" }, "")">
+                <img src="@Url.Content("~/Content/assets/flag_en.png")" style="margin-right: 10px;" /> English - English
+            </a>
+        </li>
+
+        <li>
+            <a href="@Url.Action("changeculture", "home", new { lang = "th", returnUrl = this.Request.RawUrl, area = "" }, "")">
+                <img src="@Url.Content("~/Content/assets/flag_th.png")" style="margin-right: 10px;" /> ไทย - Thai
+            </a>
+        </li>
+    </ul>
+</li>

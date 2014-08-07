@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title | ระบบอนุมัติและเผยแพร่ข่าวสู่ประชาชน</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+
+    <link href="@Url.Content("~/Content/kendo.compatibility.css")" rel="stylesheet" type="text/css" />
+        <link href="@Url.Content("~/Content/kendo/2013.2.918/kendo.common.min.css")" rel="stylesheet" type="text/css" />
+        <link href="@Url.Content("~/Content/kendo/2013.2.918/kendo.dataviz.min.css")" rel="stylesheet" type="text/css" />
+        <link href="@Url.Content("~/Content/kendo/2013.2.918/kendo.metro.min.css")" rel="stylesheet" type="text/css" />
+        <link href="@Url.Content("~/Content/kendo/2013.2.918/kendo.dataviz.metro.min.css")" rel="stylesheet" type="text/css" />
+
+
+   <script src="@Url.Content("~/Scripts/kendo/2013.2.918/kendo.all.min.js")"></script>
+        <script src="@Url.Content("~/Scripts/kendo/2013.2.918/kendo.aspnetmvc.min.js")"></script>
+        <script src="@Url.Content("~/Scripts/kendo.modernizr.custom.js")"></script>
+
+</head>
+<body>
+    <div class="pagelogo">
+        <img src="~/Content/assets/welcome_logo.png" />
+    </div>
+    <div class="pagemenu">
+        <div style="display:inline; margin-left:10px;">@Html.Partial("_LoginPartial")</div>
+        @*<div class="navmenu">
+            <ul>
+                <li id="menu_newssearch">@Html.ActionLink("ค้นหาข่าว", "index", new { controller = "search", area = "workspaces" })</li>
+                @if (this.User.IsInRole("Administrators"))
+                {
+
+                    <li id="menu_account">@Html.ActionLink("จัดการผู้ใช้งาน", "index", new { controller = "account", area = "administrators" })</li>
+                    <li id="menu_reportslog">@Html.ActionLink("ข้อมูล Log การใช้งาน", "index", new { controller = "log", area = "reports" })</li>
+                }
+
+            </ul>
+        </div>*@
+
+        <div style="width:100%;border-top:3px dotted #67346f; margin-bottom:30px;"></div>
+
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+
+
+        <footer style="text-align:center;">
+            <hr />
+            <p>&copy; @DateTime.Now.Year - สำนักข่าว กรมประชาสัมพันธ์ 90-91 ถ.เพชรบุรีตัดใหม่ แขวงบางกะปิ เขตห้วยขวาง 10310 โทรศัพท์ 02-248-8600, Fax 02-369-2579</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

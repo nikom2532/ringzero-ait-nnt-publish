@@ -1,0 +1,177 @@
+﻿@*@model IEnumerable<FIFTHMVC.Areas.Administrators.Models.AccountList>*@
+
+@{
+    ViewBag.Title = "จัดการผู้ใช้งาน";
+}
+
+<div>
+    <p class="h1title expandable">SEARCH</p>
+    <section id="loginForm" style="max-width: 1024px;">
+
+        @using (Html.BeginForm("search", "search", null, FormMethod.Post, new { id = "searchform", @class = "form-horizontal", role = "form" }))
+        {
+
+            <div class="form-horizontal" style="max-width: 800px; margin-left: auto; margin-right: auto;">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-xs-2 col-xs-offset-4" style="text-align: right;">
+                            <label class="control-label">คำค้นหา</label>
+                        </div>
+                        <div class="col-xs-10">
+                            @Html.TextBox("Keyword", "", new { @class = "form-control input-sm", style = "max-width:660px;" })
+                        </div>
+
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-xs-2 col-xs-offset-4" style="text-align: right;">
+                            <label class="control-label">สถานะ</label>
+                        </div>
+                        <div class="col-xs-4">
+                            <span class="select-menu">
+                                <span>เลือก สถานะ</span>
+                                @Html.DropDownList("Rewriter", Enumerable.Empty<SelectListItem>(), "เลือก สถานะ", new { @class = "form-control" })
+                            </span>
+
+                        </div>
+                        <div class="col-xs-2" style="text-align: right;">
+                            <label class="control-label">หน่วยงาน</label>
+                        </div>
+                        <div class="col-xs-4">
+                            <span class="select-menu">
+                                <span>เลือก หน่วยงาน</span>
+                                @Html.DropDownList("Department", ViewData["modelDepartment"] as SelectList, "เลือก หน่วยงาน", new { @class = "form-control" })
+                            </span>
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-2 col-xs-offset-4" style="text-align: right;">
+                            <label class="control-label">จังหวัด</label>
+                        </div>
+                        <div class="col-xs-4">
+                            <span class="select-menu">
+                                <span>เลือก จังหวัด</span>
+                                @Html.DropDownList("Rewriter", Enumerable.Empty<SelectListItem>(), "เลือก จังหวัด", new { @class = "form-control" })
+                            </span>
+
+                        </div>
+                        @*ViewData["modelRewriter"] as SelectList*@
+                        <div class="col-xs-2" style="text-align: right;">
+                            <label class="control-label">ระดับผู้ใช้งาน</label>
+                        </div>
+                        <div class="col-xs-4">
+
+                            <span class="select-menu">
+                                <span>เลือก ระดับผู้ใช้งาน</span>
+                                @Html.DropDownList("Rewriter", Enumerable.Empty<SelectListItem>(), "เลือก ระดับผู้ใช้งาน", new { @class = "form-control" })
+                            </span>
+                        </div>
+                    </div>
+
+
+                    <div class="row" style="text-align:center; margin-top: 10px;">
+                        <input type="button" id="buttonsubmit" value="ค้นหา" class="bt" style="margin-left:auto; margin-right:auto; width: 100px;" />
+                    </div>
+
+                </div>
+            </div>
+        }
+
+    </section>
+</div>
+
+<div id="searchresult" class="hidden">
+    <p class="h1title">ผลการค้นหา</p>
+    <div class="" id="searchresultpanel" style="min-height:200px;">
+    </div>
+    <div id="Loader" class="ajax-loader"></div>
+</div>
+
+
+
+
+<script>
+
+
+    $('#searchform').bind("keyup keypress", function (e) {
+        var code = e.keyCode || e.which;
+        if (code == 13) {
+            e.preventDefault();
+
+            $('#Loader').show();
+
+            $('#searchresult').addClass('hidden');
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("Search", "account")',
+                data: $('#searchform').serialize(),
+                success: function (result) {
+                    $("#searchresultpanel").html(result);
+                    $('#Loader').hide();
+                },
+                OnFailure: function (data) {
+                    alert("Error, please contact system administrator.");
+                }, cache: false
+            });
+
+            $('#searchresult').removeClass('hidden');
+
+            return false;
+        }
+    });
+
+
+    $("#buttonsubmit").click(function (e) {
+
+        $('#Loader').show();
+
+        $('#searchresult').addClass('hidden');
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("Search", "account")',
+            data: $('#searchform').serialize(),
+            success: function (result) {
+                $("#searchresultpanel").html(result);
+                $('#Loader').hide();
+            },
+            OnFailure: function (data) {
+                alert("Error, please contact system administrator.");
+            }, cache: false
+        });
+
+        $('#searchresult').removeClass('hidden');
+    });
+
+
+
+    $(function () {
+        $(".select-menu > select > option:eq(0)").attr("selected", "selected");
+        $(".select-menu > select").on("change", function () {
+            var selectmenu_txt = $(this).find("option:selected").text();
+            $(this).prev("span").text(selectmenu_txt);
+        });
+    });
+
+    $(".expandable").click(function () {
+
+        $header = $(this);
+        $content = $header.next();
+        //open up the content needed - toggle the slide- if visible, slide up, if not slidedown.
+        $content.slideToggle(500, function () {
+            //execute this after slideToggle is done
+            //change text of header based on visibility of content div
+            //$header.text(function () {
+            //    //change text based on condition
+            //    return $content.is(":visible") ? "Collapse" : "Expand";
+            //});
+        });
+
+    });
+
+    $(document).ready(function () {
+        $("#menu_account").addClass("active");
+    });
+</script>

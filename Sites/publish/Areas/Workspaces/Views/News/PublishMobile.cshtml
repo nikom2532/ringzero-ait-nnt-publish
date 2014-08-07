@@ -1,0 +1,67 @@
+﻿@using Kendo.Mvc.UI
+@model FIFTHMVC.Models.NT01_News
+@{
+    Layout = "";
+}
+
+<div>
+    <div>
+        @using (Html.BeginForm("publish", "news", null, FormMethod.Post, new { id = "publishform", @class = "form-horizontal", role = "form" }))
+        {
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true)
+
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">หัวข้อข่าว</label>
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.NT01_NewsTitle, new { @class = "form-control input-sm", style = "display:inline-block;max-width:700px;" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">เนื้อหาข่าว</label>
+                    <div class="col-md-10">
+
+
+@*
+                        @(Html.Kendo().EditorFor(model => model.NT01_NewsDesc)
+.HtmlAttributes(new { style = "display:inline-block;width:440px;max-width:700px;height:300px;border:1px solid #ccc;color:#333333;" })
+.Encode(true)
+.Tools(tools => tools.Clear()
+
+                    .Bold().Italic().Underline().FontSize().FontColor().JustifyLeft()
+
+                    .JustifyCenter().JustifyRight().JustifyFull().InsertUnorderedList()
+
+                    .InsertOrderedList().Indent().CreateLink().ViewHtml()))*@
+                     
+
+                        @Html.TextAreaFor(model => model.NT01_NewsDesc, new { @class = "form-control input-sm", style = "display:inline-block;max-width:700px;height:300px;" })
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">ประเภท</label>
+                    <div class="col-md-4">
+                        <span class="select-menu">
+                            <span>เลือกประเภท</span>
+                            @Html.DropDownList("test", ViewData["modelNewsType"] as SelectList, "เลือกประเภทข่าว", new { @class = "form-control" })
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+
+        }
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $("#NT01_NewsDesc").kendoEditor({
+            encoded: false
+        });
+    });
+</script>

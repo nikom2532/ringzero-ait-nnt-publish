@@ -1,0 +1,124 @@
+﻿
+@model IEnumerable<FIFTHMVC.Models.VW_NNT05_Voice>
+@using PagedList.Mvc;
+@{
+    Layout = "";
+}
+
+<div style="margin-top: 10px;">
+    <div id="@(ViewBag.Target)_Loader" class="ajax-loader"></div>
+
+    <table id="voicetable" class="table">
+        <tr style="line-height:46px;vertical-align:middle;height:36px;color: #511f7e; font-weight 400; background-color #ffffff; background: url('@Url.Content("~/Content/assets/thtail.png")');">
+
+            <th>
+                ชื่อไฟล์
+            </th>
+            <th>
+                ใช้งาน
+            </th>
+            <th>
+                เผยแพร่
+            </th>
+            <th>
+                ตัวอย่าง
+            </th>
+            <th>
+                โหลด
+            </th>
+            <th>
+                ลบ
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    @item.MediaID
+                </td>
+                <td>
+                    @if (item.FileSize >= 1000000000)
+                    {
+                        <text>@(String.Format("{0:#,##0.00}", item.FileSize / 1000000000) + "G")</text>
+                    }
+                    else if (item.FileSize >= 1000000)
+                    {
+                        <text>@(String.Format("{0:#,##0.00}", item.FileSize / 1000000) + "M")</text>
+                    }
+                    else if (item.FileSize >= 1000)
+                    {
+                        <text>@(String.Format("{0:#,##0.00}", item.FileSize / 1000) + "K")</text>
+                    }
+                </td>
+                <td>
+                    @if (item.Publish == "Y")
+                    {
+                        <img src="~/Content/assets/world.png" />
+                    }
+                </td>
+                <td>
+                    xx
+                </td>
+                <td>
+                    xx
+                </td>
+                <td>
+                    xx
+                </td>
+            </tr>
+        }
+
+    </table>
+
+</div>
+
+
+
+<script>
+
+    $(function () {
+        $(".select-menu > select > option:eq(0)").attr("selected", "selected");
+        $(".select-menu > select").on("change", function () {
+            var selectmenu_txt = $(this).find("option:selected").text();
+            $(this).prev("span").text(selectmenu_txt);
+        });
+    });
+
+
+
+    $(function () {
+
+        $('#@(ViewBag.TargetAction)_pager').on('click', 'a', function () {
+
+            $('#@(ViewBag.Target)_Loader').css({
+                height: $('#@(ViewBag.Target)_Loader').parent().height(),
+                width: $('#@(ViewBag.Target)_Loader').parent().width()
+            });
+
+            $('#@(ViewBag.Target)_Loader').show();
+
+            $.ajax({
+                url: this.href,
+                type: 'POST',
+                data: $('#searchform').serialize(),
+                cache: false,
+                success: function (result) {
+                    $('#@(ViewBag.Target)').html(result);
+                    $('#@(ViewBag.Target)_Loader').hide();
+                },
+                OnFailure: function (data) {
+                    $('#@(ViewBag.Target)_Loader').hide();
+                    alert("Error, please contact system administrator.");
+                }
+
+            });
+            return false;
+        });
+
+
+        $("tr:even").css("background-color", "#f2e9fc");
+        $("tr:odd").css("background-color", "#fdfdfb");
+    });
+</script>

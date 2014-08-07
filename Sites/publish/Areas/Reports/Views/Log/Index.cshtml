@@ -1,0 +1,191 @@
+﻿@{
+    ViewBag.Title = "ข้อมูล Log การใช้งาน";
+}
+
+
+<div>
+    <p class="h1title expandable">SEARCH</p>
+    <section id="loginForm" style="max-width: 1024px;">
+
+        @using (Html.BeginForm("search", "search", null, FormMethod.Post, new { id = "searchform", @class = "form-horizontal", role = "form" }))
+        {
+            @*@Html.AntiForgeryToken()*@
+
+            <div class="form-horizontal" style="max-width: 800px; margin-left: auto; margin-right: auto;">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-xs-2 col-xs-offset-4" style="text-align: right;">
+                            <label class="control-label">ตั้งแต่</label>
+                        </div>
+                        <div class="input-group col-xs-4">
+                            @Html.TextBox("NewsDateFrom", "", new { @class = "form-control input-sm datepicker" })
+                        </div>
+                        <div class="col-xs-2" style="text-align: right;">
+                            <label class="control-label">ถึง</label>
+                        </div>
+                        <div class="input-group col-xs-4">
+                            @Html.TextBox("NewsDateTo", "", new { @class = "form-control input-sm datepicker" })
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-xs-2 col-xs-offset-4" style="text-align: right;">
+                            <label class="control-label">สถานะผู้ใช้งาน</label>
+                        </div>
+                        <div class="col-xs-4">
+                            <span class="select-menu">
+                                <span>เลือก สถานะผู้ใช้งาน</span>
+                                @Html.DropDownList("Rewriter", Enumerable.Empty<SelectListItem>(), "เลือก สถานะผู้ใช้งาน", new { @class = "form-control" })
+                            </span>
+
+                        </div>
+                        <div class="col-xs-2" style="text-align: right;">
+                            <label class="control-label">หน่วยงาน</label>
+                        </div>
+                        <div class="col-xs-4">
+                            <span class="select-menu">
+                                <span>เลือก หน่วยงาน</span>
+                                @Html.DropDownList("Rewriter", Enumerable.Empty<SelectListItem>(), "เลือก หน่วยงาน", new { @class = "form-control" })
+                            </span>
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-2 col-xs-offset-4" style="text-align: right;">
+                            <label class="control-label">จังหวัด</label>
+                        </div>
+                        <div class="col-xs-4">
+                            <span class="select-menu">
+                                <span>เลือก จังหวัด</span>
+                                @Html.DropDownList("Rewriter", Enumerable.Empty<SelectListItem>(), "เลือก จังหวัด", new { @class = "form-control" })
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="row" style="text-align:center; margin-top: 10px;">
+                        <input type="button" id="buttonsubmit" value="ค้นหา" class="bt" style="margin-left:auto; margin-right:auto; width: 100px;" />
+                    </div>
+
+                </div>
+            </div>
+        }
+
+    </section>
+</div>
+
+
+
+
+
+<table class="table">
+    <tr style="line-height:46px;vertical-align:middle;height:36px;color: #511f7e; font-weight 400; background-color #ffffff; background: url('@Url.Content("~/Content/assets/thtail.png")');">
+        <th>
+            วันที่
+        </th>
+        <th>
+            Username
+        </th>
+        <th>
+            IP เครื่อง
+        </th>
+        <th>
+            เวลาที่เข้า
+        </th>
+        <th>
+            เวลาที่ออก
+        </th>
+        <th>
+            สถานะผู้ใช้งาน
+        </th>
+        <th>หน่วยงาน</th>
+    </tr>
+
+    @*@foreach (var item in Model)
+        {*@
+    <tr>
+        <td>xx/xx/xxxx</td>
+        <td>
+            xxxx
+        </td>
+        <td>
+            xxx.xxx.xxx.xxx
+        </td>
+        <td>
+            88:88
+        </td>
+        <td>
+            88:88
+        </td>
+        <td>
+            ยกเลิกการใช้งาน
+        </td>
+        <td>
+            หน่วยงานเครือข่าย
+        </td>
+    </tr>
+    @*}*@
+
+</table>
+
+
+<script>
+
+    $(function () {
+        $(".select-menu > select > option:eq(0)").attr("selected", "selected");
+        $(".select-menu > select").on("change", function () {
+            var selectmenu_txt = $(this).find("option:selected").text();
+            $(this).prev("span").text(selectmenu_txt);
+        });
+    });
+
+    $(".expandable").click(function () {
+
+        $header = $(this);
+        $content = $header.next();
+        //open up the content needed - toggle the slide- if visible, slide up, if not slidedown.
+        $content.slideToggle(500, function () {
+            //execute this after slideToggle is done
+            //change text of header based on visibility of content div
+            //$header.text(function () {
+            //    //change text based on condition
+            //    return $content.is(":visible") ? "Collapse" : "Expand";
+            //});
+        });
+
+    });
+
+    $(function () {
+        $("#NewsDateFrom").datepicker({
+            dateFormat: 'dd-mm-yy',
+            numberOfMonths: 1,
+            changeYear: true,
+            onSelect: function (selected) {
+                $("#NewsDateTo").datepicker("option", "minDate", selected)
+            }
+        });
+    });
+
+    $(function () {
+        $("#NewsDateTo").datepicker({
+            dateFormat: 'dd-mm-yy',
+            numberOfMonths: 1,
+            changeYear: true,
+            onSelect: function (selected) {
+                $("#NewsDateFrom").datepicker("option", "maxDate", selected)
+            }
+        });
+    });
+
+    $(document).ready(function () {
+        $("#menu_reportslog").addClass("active");
+
+        $("tr:even").css("background-color", "#f2e9fc");
+        $("tr:odd").css("background-color", "#fdfdfb");
+    });
+</script>
+

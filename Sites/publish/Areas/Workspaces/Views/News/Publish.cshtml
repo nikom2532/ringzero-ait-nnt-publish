@@ -1,0 +1,47 @@
+﻿@model FIFTHMVC.Models.PublishNews
+@{
+    Layout = "";
+}
+
+<div>
+    <div>
+        @using (Html.BeginForm("publish", "news", null, FormMethod.Post, new { id = "publishform", @class = "form-horizontal", role = "form" }))
+        {
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true)
+
+              
+                <div class="form-group">
+                    <label class="control-label col-md-2">รหัสข่าว</label>
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.NewsID, new { @class = "form-control input-sm", style = "display:inline-block;", @readonly = true })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">หัวข้อข่าว</label>
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => model.NewsTitle, new { @class = "form-control input-sm", style = "display:inline-block;max-width:600px;" })
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="control-label col-md-2">ต้องการไฟล์แนบ</label>
+                    <div class="col-md-10">
+                        @Html.CheckBox("isCheckVideo")
+                        <label for="isCheckVideo">วีดีโอ</label>
+                        @Html.CheckBox("isCheckPicture")
+                        <label for="isCheckPicture">ภาพ</label>
+                        @Html.CheckBox("isCheckVoice")
+                        <label for="isCheckVoice">เสียง</label>
+                        @Html.CheckBox("isCheckOther")
+                        <label for="isCheckOther">อื่นๆ</label>
+                    </div>
+                </div>              
+
+            </div>
+
+        }
+    </div>
+</div>

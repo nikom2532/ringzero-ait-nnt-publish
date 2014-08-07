@@ -1,0 +1,196 @@
+﻿@model PagedList.IPagedList<FIFTHMVC.Models.PublishNewsSearchResult>
+@using PagedList.Mvc;
+@*@model IEnumerable<FIFTHMVC.Models.PublishNewsSearchResult>*@
+@{
+    Layout = "";
+}
+
+<div style="margin-top: 10px;">
+    <div id="@(ViewBag.Target)_Loader" class="ajax-loader"></div>
+
+    จำนวน<span style="color: #511f7e;"> @ViewBag.ModelCount </span>รายการ
+
+    <table id="@(ViewBag.Target)table" class="table">
+        <tr style="line-height:46px;vertical-align:middle;height:46px;color: #511f7e; font-weight 400; background-color #ffffff; background: url('@Url.Content("~/Content/assets/thtail.png")');">
+            <th>
+                จัดการ
+            </th>
+            <th>
+                ลบ
+            </th>
+            <th>
+                ลำดับ
+            </th>
+            <th style="min-width:100px;">
+                หัวข้อข่าว
+            </th>
+            <th style="min-width:50px;">
+                วันที่ข่าว
+            </th>
+            <th style="min-width:80px;">
+                ผู้สื่อข่าว
+            </th>
+            <th style="min-width:80px;">
+                เรียบเรียง
+            </th>
+            <th style="min-width:90px;">
+                ประเภทข่าว
+            </th>
+            <th style="min-width:50px;">
+                สถานะ
+            </th>
+            <th style="min-width:50px;">
+                วีดีโอ
+            </th>
+            <th style="min-width:60px;">
+                รูปภาพ
+            </th>
+            <th style="min-width:50px;">
+                เสียง
+            </th>
+            <th style="min-width:50px;">
+                อื่นๆ
+            </th>
+        </tr>
+        @{int i = ViewBag.Index;}
+        @foreach (var item in Model)
+        {
+            i++;
+            <tr>
+                <td style="text-align:center;">
+                    <a href="@Url.Action("edit", "news", new { id = item.NewsID })">
+                        <img src="~/Content/assets/edit.png" />
+                    </a>
+                </td>
+                <td>
+                    <a href="@Url.Action("edit", "news", new { id = item.NewsID })">
+                        <img src="~/Content/assets/del.png" />
+                    </a>
+                </td>
+                <td style="text-align:center;">@(i)</td>
+                <td>
+                    <span style="color:#511f7e;">@Html.DisplayFor(modelItem => item.NewsID)</span><br />
+                    @Html.DisplayFor(modelItem => item.NewsTitle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NewsDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Reporter)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rewriter)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.CategoryTitle)
+                </td>
+                <td style="text-align:center;">
+                    @if (item.Publish != "")
+                    {
+                        <img src="~/Content/assets/world.png" />
+                    }
+                </td>
+                <td style="text-align:center;">
+                    @if (item.Video)
+                    {
+                        <img src="~/Content/assets/mark.png" />
+                    }
+                    else
+                    { <img src="~/Content/assets/na.png" />
+                    }
+
+                </td>
+                <td style="text-align:center;">
+                    @if (item.Picture)
+                    {
+                        <img src="~/Content/assets/mark.png" />
+                    }
+                    else
+                    { <img src="~/Content/assets/na.png" />
+                    }
+                </td>
+                <td style="text-align:center;">
+                    @if (item.Voice)
+                    {
+                        <img src="~/Content/assets/mark.png" />
+                    }
+                    else
+                    { <img src="~/Content/assets/na.png" />
+                    }
+                </td>
+                <td style="text-align:center;">
+                    @if (item.Others)
+                    {
+                        <img src="~/Content/assets/mark.png" />
+                    }
+                    else
+                    { <img src="~/Content/assets/na.png" />
+                    }
+                </td>
+
+            </tr>
+        }
+
+    </table>
+</div>
+
+
+<div id="@(ViewBag.TargetAction)_pager">
+    @Html.PagedListPager(
+        Model,
+        page => Url.Action(ViewBag.TargetAction,
+            new
+            {
+                humanID = ViewBag.HumanID,
+                page = page
+            }
+        ),
+        new PagedListRenderOptions
+        {
+            LinkToFirstPageFormat = "<",
+
+            LinkToPreviousPageFormat = "<",
+            LinkToNextPageFormat = ">",
+            LinkToLastPageFormat = ">>",
+        }
+    )
+</div>
+
+
+<script>
+
+    $(function () {
+
+        $('#@(ViewBag.TargetAction)_pager').on('click', 'a', function () {
+
+            $('#@(ViewBag.Target)_Loader').css({
+                height: $('#@(ViewBag.Target)_Loader').parent().height(),
+                width: $('#@(ViewBag.Target)_Loader').parent().width()
+            });
+
+            $('#@(ViewBag.Target)_Loader').show();
+
+            $.ajax({
+                url: this.href,
+                type: 'POST',
+                data: $('#searchform').serialize(),
+                cache: false,
+                success: function (result) {
+                    $('#@(ViewBag.Target)').html(result);
+                    $('#@(ViewBag.Target)_Loader').hide();
+                },
+                OnFailure: function (data) {
+                    $('#@(ViewBag.Target)_Loader').hide();
+                    alert("Error, please contact system administrator.");
+                }
+
+            });
+            return false;
+        });
+
+        $("#@(ViewBag.Target)table tr:even").css("background-color", "#f2e9fc");
+        $("#@(ViewBag.Target)table tr:odd").css("background-color", "#fdfdfb");
+    });
+
+</script>

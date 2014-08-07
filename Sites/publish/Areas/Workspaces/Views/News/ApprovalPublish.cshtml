@@ -1,0 +1,417 @@
+﻿@model FIFTHMVC.Models.NT01_News
+@using Kendo.Mvc.UI
+@{
+    ViewBag.Title = "เผยแพร่ข่าว " + Model.NT01_NewsID;
+}
+
+<style>
+    .required:after {
+        content: " *";
+        color: red;
+    }
+
+    .nobold {
+        font-weight: normal;
+    }
+</style>
+
+@using (Html.BeginForm("edit", "datafield", new { area = "workspaces" }, FormMethod.Post, new { id = "frm_edit" }))
+{
+    <div style="display:inline-block;margin-top:10px;width:100%;">
+
+
+        <div id="divright" style="margin-left:0px;">
+            <div style="">
+                <p class="h1title expandable" style="margin-left:-5px;">เนื้อหาข่าว</p>
+                <div style="margin-bottom:-40px;">
+                    <div class="form-horizontal" style="margin-left:10px; margin-right: auto;">
+                        <div class="form-group" style="height:460px;">
+
+
+                            <div class="row row-xs">
+                                <div class="col-xs-3" style="text-align:left;">
+                                    <label class="control-label">รหัสข่าว</label>
+                                </div>
+                            </div>
+                            <div class="row row-xs">
+                                <div class="col-xs-12">
+                                    @Html.TextBoxFor(model => model.NT01_NewsID, new { @class = "form-control input-sm required", @readonly = true })
+                                </div>
+                            </div>
+
+
+                            <div class="row row-xs">
+                                <div class="col-xs-3" style="text-align:left;">
+                                    <label class="control-label">หัวข้อข่าว</label>
+                                </div>
+                            </div>
+                            <div class="row row-xs">
+                                <div class="col-xs-12">
+                                    @Html.TextBoxFor(model => model.NT01_NewsTitle, new { @class = "form-control input-sm", style = "min-width:100%;max-width:100%;" })
+                                </div>
+                            </div>
+
+                            <div class="row row-xs">
+                                <div class="col-xs-3" style="text-align:left;">
+                                    <label class="control-label">เนื้อหาข่าว</label>
+                                </div>
+                            </div>
+
+                            <div class="row row-xs">
+                                <div class="col-xs-12">
+                                    <div style="background-color:#ffffff;border:1px solid #ccc;color:#333333;overflow-y:scroll;height:300px;padding:10px 6px 20px 6px;margin-right:12px;">
+                                        @if (Model.NT01_NewsDesc != null)
+                                        {
+                                            @Html.Raw(Model.NT01_NewsDesc)
+                                        }
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="">
+                <p class="h1title expandable" style="margin-left:-5px;">ข้อมูลไฟล์แนบ</p>
+                <div style="margin-bottom:0px;">
+                    <div class="form-group">
+                        <div class="row row-xs">
+                            <div class="col-xs-12">
+                                <div id="divfilepreview" style="text-align:center; background-color:#ffffff;border:1px solid #ccc; margin-bottom:10px;min-height:180px;">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row row-xs">
+                            <div class="col-xs-12">
+                                <div id="divfilelist">
+                                    <ul class="nav nav-tabs" style="height:40px;">
+                                        <li class="active"><a href="#filevideo" data-toggle="tab">วีดีโอ</a></li>
+                                        <li><a href="#filepicture" data-toggle="tab">รูปภาพ</a></li>
+                                        <li><a href="#filevoice" data-toggle="tab">เสียง</a></li>
+                                        <li><a href="#fileothers" data-toggle="tab">อื่นๆ</a></li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade in active" id="filevideo"><div id="filevideo_Loader" style="height:100px;" class="ajax-loader"></div></div>
+                                        <div class="tab-pane fade" id="filepicture"><div id="filevideo_Loader" style="height:100px;" class="ajax-loader"></div></div>
+                                        <div class="tab-pane fade" id="filevoice"><div id="filevideo_Loader" style="height:100px;" class="ajax-loader"></div></div>
+                                        <div class="tab-pane fade" id="fileothers"><div id="filevideo_Loader" style="height:100px;" class="ajax-loader"></div></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="">
+                <p class="h1title expandable" style="margin-left:-5px;">ช่องทางการเผยแพร่</p>
+                <div style="margin-bottom:-40px;">
+                    <div class="form-group" style="height:100px;">
+                        <div class="row row-xs">
+                            <div class="col-xs-12">
+                                <div id="divnewspublishchannel">
+
+
+
+
+
+
+                                    <div>
+                                        <div class="form-horizontal" style="margin-left: auto; margin-right: auto;">
+                                            <div class="form-group">
+                                                <div class="row row-xs">
+                                                    <div class="col-xs-2 nolrpadding" style="text-align: right;">
+                                                        <label class="control-label">WEBSITE</label>
+                                                    </div>
+                                                    <div class="col-xs-10">
+                                                        @Html.CheckBox("isCheckUpdateNews")
+                                                        <label class="nobold" for="isCheckUpdateNews">Update News</label>
+                                                        @Html.CheckBox("isCheckRunMSG")
+                                                        <label class="nobold" for="isCheckRunMSG">Run MSG</label>
+                                                        @Html.CheckBox("isCheckHotNews")
+                                                        <label class="nobold" for="isCheckHotNews">Hot News</label>
+                                                        @Html.CheckBox("isCheckPRDSharing")
+                                                        <label class="nobold" for="isCheckPRDSharing">PRD Sharing</label>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="row row-xs">
+                                                    <div class="col-xs-2 nolrpadding" style="text-align: right;">
+                                                        <label class="control-label" style="">APP MOBILE</label>
+                                                    </div>
+                                                    <div class="col-xs-10">
+                                                        @Html.CheckBox("isCheckMobileAll")
+                                                        <label class="nobold" for="isCheckMobileAll">All</label>
+                                                        <br />
+                                                        @Html.CheckBox("isCheckiOS")
+                                                        <label class="nobold" for="isCheckiOS">iOS</label>
+                                                        @Html.CheckBox("isCheckAndroid")
+                                                        <label class="nobold" for="isCheckAndroid">Android</label>
+                                                        @Html.CheckBox("isCheckBlackBerry")
+                                                        <label class="nobold" for="isCheckBlackBerry">BlackBerry</label>
+                                                        @Html.CheckBox("isCheckWindows")
+                                                        <label class="nobold" for="isCheckWindows">Windows / WindowsPhone</label>
+                                                        @Html.CheckBox("isCheckSmartTV")
+                                                        <label class="nobold" for="isCheckSmartTV">SmartTV</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <hr style="border-color:#ccc;border-style:dotted;width:90%;" />
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-12" style="text-align:center;">
+                <button class="btn_publish_news bt btn" type="button" id="btn_publish_news" style="min-width:100px;">
+                    &nbsp;&nbsp;&nbsp;อนุมัติ&nbsp;&nbsp;&nbsp;
+                </button>
+                @Html.ActionLink("ยกเลิก", "edit", new { controller = "news", area = "workspaces", id = Model.NT01_NewsID }, new { style = "min-width:100px;", @class = "bt btn" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-12" style="text-align:center;">
+                <span style="color:#ff0000;display:inline-block;">* ข้อมูลที่จำเป็นต้องกรอก</span>
+            </div>
+
+        </div>
+
+    </div>
+
+}
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModalPublish" tabindex="-1" role="dialog" aria-labelledby="myModalPublishLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">ปิด</span></button>
+                <h4 class="modal-title" id="myModalPublishLabel">เผยแพร่ข่าว</h4>
+            </div>
+            <div class="modal-body">
+                <h4>อนุมัติข่าวไป Website สำเร็จ</h4>
+            </div>
+            <div class="modal-footer">
+                 <button class="bt btn" type="button" data-dismiss="modal" style="min-width:100px;">&nbsp;&nbsp;&nbsp;ปิด&nbsp;&nbsp;&nbsp;</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModalPublishMobile" tabindex="-1" role="dialog" aria-labelledby="myModalPublishMobileLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">ปิด</span></button>
+                <h4 class="modal-title" id="myModalPublishMobileLabel">เผยแพร่ข่าว</h4>
+            </div>
+            <div class="modal-body">
+                loading...
+            </div>
+            <div class="modal-footer">
+
+                <div class="col-md-12" style="text-align:center;">
+                    <button class="bt btn" type="button" data-dismiss="modal" style="min-width:100px;">&nbsp;&nbsp;&nbsp;ยกเลิก&nbsp;&nbsp;&nbsp;</button>
+                    <button class="btn_publish_news bt btn" type="button" id="btn_publish_news" style="min-width:100px;">
+                        &nbsp;&nbsp;&nbsp;เผยแพร่ข่าว&nbsp;&nbsp;&nbsp;
+                    </button>
+                                  </div>
+
+                @*<button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                <button type="button" class="btn btn-primary btnmodelpublishmobile">ตกลง</button>*@
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $('#myTab a').click(function (e) {
+        e.preventDefault()
+        $(this).tab('show')
+    })
+
+
+    $('#isCheckMobileAll').click(function (e) {
+        var status = $('#isCheckMobileAll').prop('checked');
+
+        $('#isCheckiOS').prop("checked", status);
+        $('#isCheckAndroid').prop("checked", status);
+        $('#isCheckBlackBerry').prop("checked", status);
+        $('#isCheckWindows').prop("checked", status);
+        $('#isCheckSmartTV').prop("checked", status);
+
+    })
+
+
+
+
+    $(function () {
+        $(".select-menu > select > option:eq(0)").attr("selected", "selected");
+        $(".select-menu > select").on("change", function () {
+            var selectmenu_txt = $(this).find("option:selected").text();
+            $(this).prev("span").text(selectmenu_txt);
+        });
+    });
+
+
+    $('#myModalPublish').on('hidden.bs.modal', function (e) {
+       
+       
+    })
+
+
+    $('#btn_publish_news').click(function (e) {
+
+        if ($('#isCheckUpdateNews').is(':checked') || $('#isCheckRunMSG').is(':checked')
+           || $('#isCheckHotNews').is(':checked') || $('#isCheckPRDSharing').is(':checked')
+           ) {
+            $('#myModalPublish').modal("toggle");
+        }
+        
+
+        if ($('#isCheckiOS').is(':checked') || $('#isCheckAndroid').is(':checked')
+           || $('#isCheckBlackBerry').is(':checked') || $('#isCheckWindows').is(':checked')
+           || $('#isCheckSmartTV').is(':checked')
+           ) {
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("publishmobile", "news")',
+                data: { id: '@Model.NT01_NewsID' },
+                success: function (result) {
+
+                    $("#myModalPublishMobile .modal-body").html(result);
+                    $('#myModalPublishMobile').modal('show');
+                    $('#myModalPublishMobile').modal('show');
+
+                },
+                OnFailure: function (data) {
+                    alert("Error, please contact system administrator.");
+                }, cache: false
+            });
+        }
+        
+
+
+    })
+
+
+    $(".expandable").click(function () {
+
+        $header = $(this);
+        $content = $header.next();
+        $content.slideToggle(500, function () {
+        });
+
+    });
+
+
+
+    $(function () {
+        $("#NewsDate").datepicker({
+            dateFormat: 'dd-mm-yy',
+            numberOfMonths: 1,
+            changeYear: true,
+            onSelect: function (selected) {
+                //$("#NewsDateTo").datepicker("option", "minDate", selected)
+            }
+        });
+    });
+
+
+    $.ajax({
+        type: 'POST',
+        url: '@Url.Action("pNewsFileVideo", "news")',
+        data: { id: '@Model.NT01_NewsID' },
+        success: function (result) {
+            $("#filevideo").html(result);
+        },
+        OnFailure: function (data) {
+            alert("Error, please contact system administrator.");
+        }, cache: false
+    });
+
+
+    $.ajax({
+        type: 'POST',
+        url: '@Url.Action("pNewsFilePicture", "news")',
+        data: { id: '@Model.NT01_NewsID' },
+        success: function (result) {
+            $("#filepicture").html(result);
+        },
+        OnFailure: function (data) {
+            alert("Error, please contact system administrator.");
+        }, cache: false
+    });
+
+
+    $.ajax({
+        type: 'POST',
+        url: '@Url.Action("pNewsFileVoice", "news")',
+        data: { id: '@Model.NT01_NewsID' },
+        success: function (result) {
+            $("#filevoice").html(result);
+        },
+        OnFailure: function (data) {
+            alert("Error, please contact system administrator.");
+        }, cache: false
+    });
+
+    $.ajax({
+        type: 'POST',
+        url: '@Url.Action("pNewsFileOthers", "news")',
+        data: { id: '@Model.NT01_NewsID' },
+        success: function (result) {
+            $("#fileothers").html(result);
+        },
+        OnFailure: function (data) {
+            alert("Error, please contact system administrator.");
+        }, cache: false
+    });
+
+
+    $(document).ready(function () {
+        $("#menu_newssearch").addClass("active");
+
+
+
+        //$("form *").change(function () {
+        //    formmodified = 1;
+        //});
+
+        //formmodified = 0;
+
+        //$(window).on('beforeunload', function () {
+        //    if (formmodified == 1) {
+        //        var msg = confirmExit();
+        //        return msg;
+        //    }
+
+        //});
+        //function confirmExit() {
+        //    jQuery.ajax({
+        //    });
+        //    return "ข้อมุลที่ทำการเปลี่ยนแปลง จะไม่ถูกทำการบันทึก, ท่านมั่นใจที่จะออกจากหน้านี้หรือไม?";
+        //}
+    });
+
+</script>
+

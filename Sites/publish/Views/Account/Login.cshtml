@@ -1,0 +1,51 @@
+﻿@model FIFTHMVC.Areas.Administrators.Models.LoginViewModel
+
+@{
+    ViewBag.Title = "เข้าสู่ระบบ";
+    Layout = "~/Views/Shared/_LayoutWelcome.cshtml";
+}
+
+<div class="row" style="text-align: center;margin-left: auto; margin-right: auto; ">
+    <div class="" style="margin-left: auto; margin-right: auto; max-width: 1024px;">
+        <section id="loginForm" style="max-width: 1024px;">
+            <center>
+                @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    <h6>เข้าสู่ระบบ ระบบอนุมัติและเผยแพร่ข่าวสู่ประชาชน</h6>
+                    @Html.ValidationSummary(true)
+
+                    <div class="form-group">
+                        <div class="" style="">
+                            @Html.TextBoxFor(m => m.UserName, new { @class = "txt-field", placeholder = "Username", style = "width: 60%;margin-left:auto; margin-right:auto;", autocomplete = "off" })
+                            <br />@Html.ValidationMessageFor(m => m.UserName)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="">
+                            @Html.PasswordFor(m => m.Password, new { @class = "txt-field", placeholder = "password", style = "width: 60%;margin-left:auto; margin-right:auto;" })
+                            <br />@Html.ValidationMessageFor(m => m.Password)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="">
+
+                            @Html.CheckBoxFor(m => m.RememberMe)
+                            @Html.LabelFor(m => m.RememberMe)
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="">
+                            <input type="submit" value="เข้าสู่ระบบ" class="bt" style="margin-left:auto; margin-right:auto; width:18%;padding: 4px;height:32px;" />
+                        </div>
+                    </div>
+                }
+
+            </center>
+        </section>
+
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,19 @@
+﻿@using Microsoft.AspNet.Identity
+@using System.Globalization;
+@using System.Threading;
+
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "account", new { area = "" }, FormMethod.Post, new { id = "logoutForm", @class = "navbar-left" }))
+    {      
+        var displayname = User.Identity.Name;
+        <span>&nbsp;Welcome to: @displayname | <a href="javascript:document.getElementById('logoutForm').submit()">ออกจากระบบ</a></span>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("เข้าสู่ระบบ", "login", "account", new { area = "" }, htmlAttributes: new { id = "loginLink" })</li>
+        @Html.Partial("_LanguageList")
+    </ul>
+}

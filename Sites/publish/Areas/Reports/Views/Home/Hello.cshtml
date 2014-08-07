@@ -1,0 +1,105 @@
+﻿
+@{
+    ViewBag.Title = "Hello Reports";
+}
+
+<h2>Hello Reports</h2>
+
+<script type="text/javascript">
+
+
+    $(function () {
+
+        $("#DateFrom").datepicker({ dateFormat: "dd/mm/yy" });
+        $("#DateTo").datepicker({ dateFormat: "dd/mm/yy" });
+
+        $(".datefield").datepicker({ dateFormat: 'dd/mm/yy', changeYear: true });
+    });
+
+
+    $(document).on("click", "#ShowReport", function () {
+
+        var chkValue = true;
+
+        if ($('#DateFrom').val() == '' || $('#DateTo').val() == '') {
+            alert('Please Select Date.');
+            chkValue = false;
+        }
+
+        if (chkValue) {
+            var url = $('#hdUrl').val();
+            var url = url + "dpDATEFROM=" + $('#DateFrom').val() + '&' + "dpDATETO=" + $('#DateTo').val();
+            $('#ifrReport').attr('src', url);
+        }
+    });
+
+</script>
+
+<form>
+
+    <input id="hdUrl" type="hidden" value="@ViewData["reportUrl"]" />
+    <div class="row">
+        <div class="col-md-10" style="">
+            <label for="DateFrom">Date From:</label>
+
+            @Html.TextBox("DateFrom", String.Format("{0:dd/MM/yyyy}", DateTime.Now.AddDays(-8)), new { @class = "form-control", style = "display:inline-block; width: 140px;" })
+
+            <label for="DateTo"> to </label>
+
+            @Html.TextBox("DateTo", String.Format("{0:dd/MM/yyyy}", DateTime.Now.Date.AddDays(0)), new { @class = "form-control", style = "display:inline-block; width: 140px;" })
+
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-10" style="">
+            <br />
+            <button type="button" id="ShowReport" title="Show Report">Show Report</button>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+
+    <br />
+
+    <iframe src="" id="ifrReport" style="width: 100%; height: 500px; border-width:1px; border-style: solid; border-color:#cdcdcd;" frameborder="0" hspace="0" vspace="0" marginheight="0" marginwidth="0"></iframe>
+
+</form>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        // Set specific variable to represent all iframe tags.
+        var iFrames = document.getElementsByTagName('iframe');
+
+        // Resize heights.
+        function iResize() {
+            // Iterate through all iframes in the page.
+            for (var i = 0, j = iFrames.length; i < j; i++) {
+                // Set inline style to equal the body height of the iframed content.
+                iFrames[i].style.height = (iFrames[i].contentWindow.document.body.offsetHeight + 40) + 'px';
+            }
+        }
+
+        //// Check if browser is Safari or Opera.
+        //if ($.browser.safari || $.browser.opera) {
+        //    // Start timer when loaded.
+        //    $('iframe').load(function () {
+        //        setTimeout(iResize, 0);
+        //    });
+
+        //    // Safari and Opera need a kick-start.
+        //    for (var i = 0, j = iFrames.length; i < j; i++) {
+        //        var iSource = iFrames[i].src;
+        //        iFrames[i].src = '';
+        //        iFrames[i].src = iSource;
+        //    }
+        //} else {
+            // For other good browsers.
+            $('iframe').load(function () {
+                // Set inline style to equal the body height of the iframed content.
+                this.style.height = (this.contentWindow.document.body.offsetHeight + 40) + 'px';
+            });
+        //}
+    });
+
+    </script>

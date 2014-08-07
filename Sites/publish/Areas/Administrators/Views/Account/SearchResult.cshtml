@@ -1,0 +1,126 @@
+﻿@model PagedList.IPagedList<FIFTHMVC.Areas.Administrators.Models.AccountList>
+@using PagedList.Mvc;
+@{
+    Layout = "";
+}
+
+<div style="margin-top: 10px;">
+    <div id="@(ViewBag.Target)_Loader" class="ajax-loader"></div>
+
+    จำนวน<span style="color: #511f7e;"> @ViewBag.ModelCount </span>รายการ
+    <table class="table">
+        <tr style="line-height:46px;vertical-align:middle;height:36px;color: #511f7e; font-weight 400; background-color #ffffff; background: url('@Url.Content("~/Content/assets/thtail.png")');">
+
+            <th></th>
+            <th style="min-width:100px;">
+                Username
+            </th>
+            <th>
+                ชื่อ-นามสกุล
+            </th>
+            <th style="min-width:80px;">
+                วันที่สมัคร
+            </th>
+            <th>
+                หน่วยงาน
+            </th>
+            <th style="min-width:100px;">
+                จังหวัด
+            </th>
+            <th style="min-width:120px;">
+                สถานะการใช้งาน
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>x</td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Username)
+                </td>
+                <td>
+                    <a title="Edit" href="@Url.Action("details", "account", new { id = item.UserID })">
+                        @Html.DisplayFor(modelItem => item.Fullname)
+                    </a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ApplyDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Department)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Province)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+            </tr>
+        }
+
+    </table>
+
+</div>
+
+
+<div id="@(ViewBag.TargetAction)_pager">
+    @Html.PagedListPager(
+        Model,
+        page => Url.Action(ViewBag.TargetAction,
+            new
+            {
+                humanID = ViewBag.HumanID,
+                page = page
+            }
+        ),
+        new PagedListRenderOptions
+        {
+            LinkToFirstPageFormat = "<<",
+            LinkToPreviousPageFormat = "prev",
+            LinkToNextPageFormat = "next",
+            LinkToLastPageFormat = ">>",
+        }
+    )
+</div>
+
+
+
+<script>
+
+
+
+    $(function () {
+
+        $('#@(ViewBag.TargetAction)_pager').on('click', 'a', function () {
+
+            $('#@(ViewBag.Target)_Loader').css({
+                height: $('#@(ViewBag.Target)_Loader').parent().height(),
+                width: $('#@(ViewBag.Target)_Loader').parent().width()
+            });
+
+            $('#@(ViewBag.Target)_Loader').show();
+
+            $.ajax({
+                url: this.href,
+                type: 'POST',
+                data: $('#searchform').serialize(),
+                cache: false,
+                success: function (result) {
+                    $('#@(ViewBag.Target)').html(result);
+                    $('#@(ViewBag.Target)_Loader').hide();
+                },
+                OnFailure: function (data) {
+                    $('#@(ViewBag.Target)_Loader').hide();
+                    alert("Error, please contact system administrator.");
+                }
+
+            });
+            return false;
+        });
+
+
+        $("tr:even").css("background-color", "#f2e9fc");
+        $("tr:odd").css("background-color", "#fdfdfb");
+    });
+</script>
